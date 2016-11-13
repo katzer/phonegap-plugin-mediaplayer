@@ -1,0 +1,21 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "phonegap.plugin.mediaplayer.example"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "phonegap.plugin.mediaplayer.example"
+        },
+        "cordova-plugin-audioplayer": {
+            "PACKAGE_NAME": "phonegap.plugin.mediaplayer.example"
+        }
+    },
+    "dependent_plugins": {}
+}

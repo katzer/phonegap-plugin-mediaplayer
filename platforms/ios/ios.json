@@ -1,0 +1,69 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AudioPlayer\"><param name=\"ios-package\" value=\"APPAudioPlayerPlugin\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Info.plist": {
+                "parents": {
+                    "UIBackgroundModes": [
+                        {
+                            "xml": "<array><string>audio</string></array>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "phonegap.plugin.mediaplayer.example"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "phonegap.plugin.mediaplayer.example"
+        },
+        "cordova-plugin-audioplayer": {
+            "PACKAGE_NAME": "phonegap.plugin.mediaplayer.example"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "id": "cordova-plugin-dialogs.notification",
+            "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+            "pluginId": "cordova-plugin-dialogs",
+            "merges": [
+                "navigator.notification"
+            ]
+        },
+        {
+            "id": "cordova-plugin-audioplayer.AudioPlayer",
+            "file": "plugins/cordova-plugin-audioplayer/www/audioplayer.js",
+            "pluginId": "cordova-plugin-audioplayer",
+            "clobbers": [
+                "cordova.plugins.audioPlayer"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "cordova-plugin-whitelist": "1.3.0",
+        "cordova-plugin-dialogs": "1.3.0",
+        "cordova-plugin-audioplayer": "1.0.0-dev"
+    }
+}

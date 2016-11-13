@@ -1,0 +1,6 @@
+{
+    "AVFoundation.framework": 2,
+    "CoreAudio.framework": 2,
+    "MediaPlayer.framework": 2,
+    "AudioToolbox.framework": 2
+}
