@@ -138,7 +138,7 @@ var app = {
             console.log('Song queued');
         }
 
-        cordova.plugins.audioPlayer.queue(song, callbackFunc);
+        cordova.plugins.audioPlayer.queue(song, { replace: false, play: false }, callbackFunc);
     },
 
     clear: function () {
