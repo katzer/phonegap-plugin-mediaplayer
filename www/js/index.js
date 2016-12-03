@@ -125,7 +125,7 @@ var app = {
     addURL: function () {
         console.log('addURL');
 
-        var song = {
+       var song1 = {
             id: '3',
             title: 'California Lullabye (Seccond One)',
             album: 'The Beautiful Machine',
@@ -134,11 +134,20 @@ var app = {
             cover: 'https://upload.wikimedia.org/wikipedia/en/5/54/Public_image_ltd_album_cover.jpg'
         }
 
+        var song2 = {
+            id: '11',
+            title: 'Let it in',
+            album: 'Ashes',
+            artist: 'Josh Woodward',
+            file: 'https://www.joshwoodward.com/mp3/Ashes/JoshWoodward-Ashes-01-LetItIn.mp3',
+            cover: 'https://upload.wikimedia.org/wikipedia/en/5/54/Public_image_ltd_album_cover.jpg'
+        }
+
         var callbackFunc = function() {
             console.log('Song queued');
         }
 
-        cordova.plugins.audioPlayer.queue(song, { replace: false, play: false }, callbackFunc);
+        cordova.plugins.audioPlayer.queue( [song1, song2], { replace: false, play: false }, callbackFunc );
     },
 
     clear: function () {
