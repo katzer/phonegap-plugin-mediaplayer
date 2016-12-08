@@ -28,16 +28,18 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
-        document.getElementById('playRemote').addEventListener('click', this.testSound);
-        document.getElementById('pause').addEventListener('click', this.pauseSound);
-        document.getElementById('play').addEventListener('click', this.playSound);
-        document.getElementById('next').addEventListener('click', this.nextSound);
-        document.getElementById('add').addEventListener('click', this.addURL);
-        document.getElementById('clear').addEventListener('click', this.clear);
-        document.getElementById('current').addEventListener('click', this.current);
-        document.getElementById('playOtherRemote').addEventListener('click', this.testSound2);
-        document.getElementById('fadeIn').addEventListener('click', this.fadeIn);
-        document.getElementById('fadeOut').addEventListener('click', this.fadeOut);
+        document.getElementById('playSong').addEventListener('click', this.playSong);
+        document.getElementById('playAnotherSong').addEventListener('click', this.playAnotherSong);
+        document.getElementById('queue').addEventListener('click', this.queue);
+        document.getElementById('queueAndStart').addEventListener('click', this.queueAndStart);
+        document.getElementById('queueAndDelete').addEventListener('click', this.queueAndDelete);
+        document.getElementById('play').addEventListener('click', this.play);
+        document.getElementById('pause').addEventListener('click', this.pause);
+        document.getElementById('playNext').addEventListener('click', this.playNext);
+        document.getElementById('stop').addEventListener('click', this.stop);
+        document.getElementById('getCurrentTrack').addEventListener('click', this.getCurrentTrack);
+        document.getElementById('fadeInVolume').addEventListener('click', this.fadeInVolume);
+        document.getElementById('fadeOutVolume').addEventListener('click', this.fadeOutVolume);
     },
 
     // Update DOM on a Received Event
@@ -52,12 +54,8 @@ var app = {
         console.log('Received Event: ' + id);
     },
 
-    logTest: function () {
-        console.log('check');
-    },
-
-    testSound: function () {
-        console.log('startStream');
+    playSong: function () {
+        console.log('playSong');
 
         var song = {
             id: '11',
@@ -75,8 +73,8 @@ var app = {
         cordova.plugins.audioPlayer.play(song, callbackFunc);
     },
 
-    testSound2: function () {
-        console.log('startStream2');
+    playAnotherSong: function () {
+        console.log('playAnotherSong');
 
         var song = {
             id: '22',
@@ -94,7 +92,100 @@ var app = {
         cordova.plugins.audioPlayer.play(song, callbackFunc);
     },
 
-    pauseSound: function () {
+    queue: function () {
+        console.log('queue');
+
+       var song1 = {
+            id: '3',
+            title: 'California Lullabye (Seccond One)',
+            album: 'The Beautiful Machine',
+            artist: 'Josh Woodward',
+            file: 'https://www.joshwoodward.com/mp3/JoshWoodward-TheBeautifulMachine-01-CaliforniaLullabye.mp3',
+            cover: 'https://upload.wikimedia.org/wikipedia/en/5/54/Public_image_ltd_album_cover.jpg'
+        }
+
+        var song2 = {
+            id: '11',
+            title: 'Let it in',
+            album: 'Ashes',
+            artist: 'Josh Woodward',
+            file: 'https://www.joshwoodward.com/mp3/Ashes/JoshWoodward-Ashes-01-LetItIn.mp3',
+            cover: 'https://upload.wikimedia.org/wikipedia/en/5/54/Public_image_ltd_album_cover.jpg'
+        }
+
+        var callbackFunc = function() {
+            console.log('Songs queued');
+        }
+
+        cordova.plugins.audioPlayer.queue( [song1, song2], { replace: false, play: false }, callbackFunc );
+    },
+
+    queueAndStart: function () {
+        console.log('queueAndStart');
+
+       var song1 = {
+            id: '3',
+            title: 'California Lullabye (Seccond One)',
+            album: 'The Beautiful Machine',
+            artist: 'Josh Woodward',
+            file: 'https://www.joshwoodward.com/mp3/JoshWoodward-TheBeautifulMachine-01-CaliforniaLullabye.mp3',
+            cover: 'https://upload.wikimedia.org/wikipedia/en/5/54/Public_image_ltd_album_cover.jpg'
+        }
+
+        var song2 = {
+            id: '11',
+            title: 'Let it in',
+            album: 'Ashes',
+            artist: 'Josh Woodward',
+            file: 'https://www.joshwoodward.com/mp3/Ashes/JoshWoodward-Ashes-01-LetItIn.mp3',
+            cover: 'https://upload.wikimedia.org/wikipedia/en/5/54/Public_image_ltd_album_cover.jpg'
+        }
+
+        var callbackFunc = function() {
+            console.log('Songs queued');
+        }
+
+        cordova.plugins.audioPlayer.queue( [song1, song2], { replace: true, play: true }, callbackFunc );
+    },
+
+    queueAndDelete: function () {
+        console.log('queueAndDelete');
+
+       var song1 = {
+            id: '3',
+            title: 'California Lullabye (Seccond One)',
+            album: 'The Beautiful Machine',
+            artist: 'Josh Woodward',
+            file: 'https://www.joshwoodward.com/mp3/JoshWoodward-TheBeautifulMachine-01-CaliforniaLullabye.mp3',
+            cover: 'https://upload.wikimedia.org/wikipedia/en/5/54/Public_image_ltd_album_cover.jpg'
+        }
+
+        var song2 = {
+            id: '11',
+            title: 'Let it in',
+            album: 'Ashes',
+            artist: 'Josh Woodward',
+            file: 'https://www.joshwoodward.com/mp3/Ashes/JoshWoodward-Ashes-01-LetItIn.mp3',
+            cover: 'https://upload.wikimedia.org/wikipedia/en/5/54/Public_image_ltd_album_cover.jpg'
+        }
+
+        var callbackFunc = function() {
+            console.log('Songs queued');
+        }
+
+        cordova.plugins.audioPlayer.queue( [song1, song2], { replace: true, play: false }, callbackFunc );
+    },
+
+    play: function () {
+        console.log('play');
+
+        var callbackFunc = function() {
+            console.log('Playback started');
+        };
+        cordova.plugins.audioPlayer.play();
+    },
+
+    pause: function () {
         console.log('pause');
 
         var callbackFunc = function() {
@@ -104,17 +195,8 @@ var app = {
         cordova.plugins.audioPlayer.pause(callbackFunc);
     },
 
-    playSound: function () {
-        console.log('play');
-
-        var callbackFunc = function() {
-            console.log('Playback started');
-        };
-        cordova.plugins.audioPlayer.play();
-    },
-
-    nextSound: function () {
-        console.log('next');
+    playNext: function () {
+        console.log('playNext');
 
         var callbackFunc = function() {
             console.log('Next Song started');
@@ -122,26 +204,7 @@ var app = {
         cordova.plugins.audioPlayer.playNext();
     },
 
-    addURL: function () {
-        console.log('addURL');
-
-        var song = {
-            id: '3',
-            title: 'California Lullabye (Seccond One)',
-            album: 'The Beautiful Machine',
-            artist: 'Josh Woodward',
-            file: 'https://www.joshwoodward.com/mp3/JoshWoodward-TheBeautifulMachine-01-CaliforniaLullabye.mp3',
-            cover: 'https://upload.wikimedia.org/wikipedia/en/5/54/Public_image_ltd_album_cover.jpg'
-        }
-
-        var callbackFunc = function() {
-            console.log('Song queued');
-        }
-
-        cordova.plugins.audioPlayer.queue(song, callbackFunc);
-    },
-
-    clear: function () {
+    stop: function () {
         console.log('stop');
 
         var callbackFunc = function() {
@@ -150,8 +213,8 @@ var app = {
         cordova.plugins.audioPlayer.stop(callbackFunc);
     },
 
-    current: function () {
-        console.log('current');
+    getCurrentTrack: function () {
+        console.log('getCurrentTrack');
         var succes = function(id) {
             console.log(id);
             var string = 'Current Track ' + id;
@@ -170,7 +233,7 @@ var app = {
         cordova.plugins.audioPlayer.getCurrentTrack(succes);
     },
 
-    fadeIn: function () {
+    fadeInVolume: function () {
         console.log('fadeInVolume');
 
         var callbackFunc = function() {
@@ -179,7 +242,7 @@ var app = {
         cordova.plugins.audioPlayer.fadeInVolume(callbackFunc);
     },
 
-    fadeOut: function () {
+    fadeOutVolume: function () {
         console.log('fadeOutVolume');
 
         var callbackFunc = function() {

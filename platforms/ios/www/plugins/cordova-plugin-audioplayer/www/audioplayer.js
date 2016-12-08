@@ -1,31 +1,29 @@
 cordova.define("cordova-plugin-audioplayer.AudioPlayer", function(require, exports, module) {
 /* global cordova:false */
 
-/* global cordova:false */
-               
 /*
- Copyright 2013-2016 appPlant GmbH
- 
- Licensed to the Apache Software Foundation (ASF) under one
- or more contributor license agreements.  See the NOTICE file
- distributed with this work for additional information
- regarding copyright ownership.  The ASF licenses this file
- to you under the Apache License, Version 2.0 (the
- 'License'); you may not use this file except in compliance
- with the License.  You may obtain a copy of the License at
- 
- http://www.apache.org/licenses/LICENSE-2.0
- 
- Unless required by applicable law or agreed to in writing,
- software distributed under the License is distributed on an
- 'AS IS' BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- KIND, either express or implied.  See the License for the
- specific language governing permissions and limitations
- under the License.
- */
-               
-               var exec = require('cordova/exec');
-               
+    Copyright 2013-2016 appPlant GmbH
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    'License'); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    'AS IS' BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+*/
+
+var exec = require('cordova/exec');
+
 /**
  * Setup tracking function.
  *
@@ -35,16 +33,16 @@ cordova.define("cordova-plugin-audioplayer.AudioPlayer", function(require, expor
  *
  * @return [ Void ]
  */
-               exports.setup = function (url, success, failure) {
-               
-               if (!(typeof url == 'string' && url.match(/^http/i))) {
-               failure('Invalid tracking url');
-               return;
-               }
-               
-               exec(success, null, 'AudioPlayer', 'setup', [url]);
-               };
-               
+exports.setup = function (url, success, failure) {
+
+    if (!(typeof url == 'string' && url.match(/^http/i))) {
+        failure('Invalid tracking url');
+        return;
+    }
+
+    exec(success, null, 'AudioPlayer', 'setup', [url]);
+};
+
 /**
  * Start playing the specified song or at the current queue position.
  *
@@ -59,21 +57,20 @@ cordova.define("cordova-plugin-audioplayer.AudioPlayer", function(require, expor
  *
  * @return [ Void ]
  */
-               exports.play = function (song, callback) {
-               console.log(song);
-               var isSongGiven = (typeof song != 'function') && (typeof song != 'undefined');
-               
-               if (isSongGiven) {
-               exports.queue(song, { replace: false, play: true }, callback);
-               } else {
-               callback = song;
-               exec(callback, null, 'AudioPlayer', 'play', []);
-               }
-               };
-               
-               // Alias for method `play`
-               exports.resume = exports.play;
-               
+exports.play = function (song, callback) {
+    var isSongGiven = typeof song != 'function';
+
+    if (isSongGiven) {
+        exports.queue(song, { replace: false, play: true }, callback);
+    } else {
+        callback = song;
+        exec(callback, null, 'AudioPlayer', 'play', []);
+    }
+};
+
+// Alias for method `play`
+exports.resume = exports.play;
+
 /**
  * Jump to next song and start playing the track.
  *
@@ -81,10 +78,10 @@ cordova.define("cordova-plugin-audioplayer.AudioPlayer", function(require, expor
  *
  * @return [ Void ]
  */
-               exports.playNext = function (callback) {
-               exec(callback, null, 'AudioPlayer', 'playNext', []);
-               };
-               
+exports.playNext = function (callback) {
+    exec(callback, null, 'AudioPlayer', 'playNext', []);
+};
+
 /**
  * Add the specified song to the end of the queue.
  *
@@ -103,17 +100,17 @@ cordova.define("cordova-plugin-audioplayer.AudioPlayer", function(require, expor
  *
  * @return [ Void ]
  */
-               exports.queue = function(song, options, success, failure) {
-               var isValid = exports.isValidSong(song);
-               
-               if (!isValid) {
-               failure('Incomplete song');
-               return;
-               }
-               
-               exec(success, failure, 'AudioPlayer', 'queue', [song, options]);
-               };
-               
+exports.queue = function(song, options, success, failure) {
+    var isValid = exports.isValidSong(song);
+
+    if (!isValid) {
+        failure('Incomplete song');
+        return;
+    }
+
+    exec(success, failure, 'AudioPlayer', 'queue', [song, options]);
+};
+
 /**
  * Pause the current track.
  * Use play or resume after to continue.
@@ -122,10 +119,10 @@ cordova.define("cordova-plugin-audioplayer.AudioPlayer", function(require, expor
  *
  * @return [ Void ]
  */
-               exports.pause = function (callback) {
-               exec(callback, null, 'AudioPlayer', 'pause', []);
-               };
-               
+exports.pause = function (callback) {
+    exec(callback, null, 'AudioPlayer', 'pause', []);
+};
+
 /**
  * Stop playing and clear the queue.
  *
@@ -133,43 +130,43 @@ cordova.define("cordova-plugin-audioplayer.AudioPlayer", function(require, expor
  *
  * @return [ Void ]
  */
-               exports.stop = function (callback) {
-               exec(callback, null, 'AudioPlayer', 'stop', []);
-               };
-               
+exports.stop = function (callback) {
+    exec(callback, null, 'AudioPlayer', 'stop', []);
+};
+
 /**
- * Fade the volume of the track from 0 to 1.
+ * Stop playing and clear the queue.
  *
  * @param [ Function ] callback Optional callback.
  *
  * @return [ Void ]
  */
-               exports.fadeInVolume = function (callback) {
-               exec(callback, null, 'AudioPlayer', 'fadeInVolume', []);
-               };
-               
+exports.fadeInVolume = function (callback) {
+    exec(success, failure, 'AudioPlayer', 'fadeInVolume', []);
+};
+
 /**
- * Fade the volume of the track from 1 to 0.
+ * Stop playing and clear the queue.
  *
  * @param [ Function ] callback Optional callback.
  *
  * @return [ Void ]
  */
-               exports.fadeOutVolume = function (callback) {
-               exec(callback, null, 'AudioPlayer', 'fadeOutVolume', []);
-               };
-               
+exports.fadeOutVolume = function (callback) {
+    exec(success, failure, 'AudioPlayer', 'fadeOutVolume', []);
+};
+
 /**
- * Get the id of the current track.
+ * Stop playing and clear the queue.
  *
  * @param [ Function ] callback Function to execute with the ID of the track.
  *
  * @return [ Void ]
  */
-               exports.getCurrentTrack = function (callback) {
-               exec(callback, null, 'AudioPlayer', 'currentTrack', []);
-               };
-               
+exports.getCurrentTrack = function (callback) {
+    exec(callback, null, 'AudioPlayer', 'currentTrack', []);
+};
+
 /**
  * Validates the given song regarding completeness.
  *
@@ -177,17 +174,16 @@ cordova.define("cordova-plugin-audioplayer.AudioPlayer", function(require, expor
  *
  * @return [ Boolean ]
  */
-               exports.isValidSong = function (song) {
-               var attrs = ['id', 'title', 'album', 'artist', 'file', 'cover'];
-               
-               if (!song) return false;
-               
-               for (var index = 0, attr = attrs[index]; index < attrs.length; index++) {
-               if (!song[attr]) return false;
-               }
-               
-               return true;
-               };
+exports.isValidSong = function (song) {
+    var attrs = ['id', 'title', 'album', 'artist', 'file', 'cover'];
 
+    if (!song) return false;
+
+    for (var index = 0, attr = attrs[index]; index < attrs.length; index++) {
+        if (!song[attr]) return false;
+    }
+
+    return true;
+};
 
 });

@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D7888F65E511574712F6AF4B4B65653F59826111+++69015A9",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "D7888F65E511574712F6AF4B4B65653F59826111+++0466617" : 0,
+    "D7888F65E511574712F6AF4B4B65653F59826111+++7897A42" : 0,
+    "D7888F65E511574712F6AF4B4B65653F59826111+++69015A9" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "91CCC2ED-5B9D-4677-A949-76065A76E0EE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "D7888F65E511574712F6AF4B4B65653F59826111+++0466617" : "..\/phonegap-plugin-mediaplayer",
+    "D7888F65E511574712F6AF4B4B65653F59826111+++7897A42" : "..\/phonegap-plugin-mediaplayer",
+    "D7888F65E511574712F6AF4B4B65653F59826111+++69015A9" : "phonegap-plugin-mediaplayer_example\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "MediaPlayerExample",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "platforms\/ios\/MediaPlayerExample.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/katzer\/phonegap-plugin-mediaplayer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D7888F65E511574712F6AF4B4B65653F59826111+++0466617"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/katzer\/phonegap-plugin-mediaplayer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D7888F65E511574712F6AF4B4B65653F59826111+++69015A9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/katzer\/phonegap-plugin-mediaplayer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D7888F65E511574712F6AF4B4B65653F59826111+++7897A42"
+    }
+  ]
+}
