@@ -28,6 +28,27 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
+
+        var context = this;
+
+        //register on events
+        cordova.plugins.audioPlayer.on('start', function(song) {
+            context.makeToast('start');
+        });
+        cordova.plugins.audioPlayer.on('pause', function(song) {
+            context.makeToast('pause');
+        });
+        cordova.plugins.audioPlayer.on('finish', function(song) {
+            context.makeToast('finish');
+        });
+        cordova.plugins.audioPlayer.on('fail', function(song) {
+            context.makeToast('fail');
+        });
+        cordova.plugins.audioPlayer.on('stop', function(song) {
+            context.makeToast('stop');
+        });
+
+        //add Event Listener
         document.getElementById('playSong').addEventListener('click', this.playSong);
         document.getElementById('playAnotherSong').addEventListener('click', this.playAnotherSong);
         document.getElementById('queue').addEventListener('click', this.queue);
@@ -40,6 +61,8 @@ var app = {
         document.getElementById('getCurrentTrack').addEventListener('click', this.getCurrentTrack);
         document.getElementById('fadeInVolume').addEventListener('click', this.fadeInVolume);
         document.getElementById('fadeOutVolume').addEventListener('click', this.fadeOutVolume);
+        document.getElementById('playLocaleSong').addEventListener('click', this.playLocaleSong);
+        document.getElementById('setup').addEventListener('click', this.setup);
     },
 
     // Update DOM on a Received Event
@@ -87,6 +110,25 @@ var app = {
 
         var callbackFunc = function() {
             console.log('Song Nr.2 started');
+        }
+
+        cordova.plugins.audioPlayer.play(song, callbackFunc);
+    },
+
+    playLocaleSong: function () {
+        console.log('playLocaleSong');
+
+        var song = {
+            id: '06',
+            title: 'Learn To Fly',
+            album: 'Here Today Remixed',
+            artist: 'Josh Woodward',
+            file: 'Staging/www/assets/JoshWoodward-HereTodayRemixed-06-LearnToFly.mp3',
+            cover: 'https://upload.wikimedia.org/wikipedia/en/5/54/Public_image_ltd_album_cover.jpg'
+        }
+
+        var callbackFunc = function() {
+            console.log('Locale song started');
         }
 
         cordova.plugins.audioPlayer.play(song, callbackFunc);
@@ -249,6 +291,33 @@ var app = {
             console.log('Faded out');
         }
         cordova.plugins.audioPlayer.fadeOutVolume(callbackFunc);
+    },
+
+    setup: function () {
+        console.log('setup url');
+
+        var callbackFunc = function() {
+            console.log('Tracking url set');
+        }
+        var failureCallback = function() {
+            console.log('Failed to set URL');
+        }
+
+        var url = '';
+        cordova.plugins.audioPlayer.setup(url, callbackFunc, failureCallback);
+    },
+
+    makeToast: function(eventName) {
+        var dismissedFcn = function() {
+            console.log('dismissed');
+        };
+
+        navigator.notification.alert(
+            eventName,  // message
+            dismissedFcn,         // callback
+            'Message',            // title
+            'OK'                  // buttonName
+        );
     }
 };
 
