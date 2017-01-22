@@ -7,13 +7,13 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
+        "cordova-plugin-audioplayer": {
             "PACKAGE_NAME": "phonegap.plugin.mediaplayer.example"
         },
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "phonegap.plugin.mediaplayer.example"
         },
-        "cordova-plugin-audioplayer": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "phonegap.plugin.mediaplayer.example"
         }
     },

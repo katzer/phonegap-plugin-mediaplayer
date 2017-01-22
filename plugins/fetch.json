@@ -34,7 +34,7 @@
     "cordova-plugin-audioplayer": {
         "source": {
             "type": "local",
-            "path": "/Users/philippknittel/Documents/AppPlant/gitHub/phonegap-plugin-mediaplayer"
+            "path": "/Users/sebastian/Documents/appPlant/spottyegg/cordova-plugin-mediaplayer"
         },
         "is_top_level": true,
         "variables": {}

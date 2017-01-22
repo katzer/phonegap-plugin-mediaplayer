@@ -58,10 +58,10 @@ exports.setup = function (url, success, failure) {
  * @return [ Void ]
  */
 exports.play = function (song, callback) {
-    var isSongGiven = typeof song != 'function';
+    var isSongGiven = (typeof song != 'function') && (typeof song != 'undefined');
 
     if (isSongGiven) {
-        exports.queue(song, { replace: false, play: true }, callback);
+        exports.queue(song, { replace: true, play: true }, callback);
     } else {
         callback = song;
         exec(callback, null, 'AudioPlayer', 'play', []);
@@ -85,7 +85,7 @@ exports.playNext = function (callback) {
 /**
  * Add the specified song to the end of the queue.
  *
- * @param [ Object ] song A hash containing all required infos.
+ * @param [ Object ] songs An Array of hashes containing all required information.
  *      id: The tracking ID.
  *      title: The title of the song.
  *      album: The name of the album.
@@ -100,15 +100,28 @@ exports.playNext = function (callback) {
  *
  * @return [ Void ]
  */
-exports.queue = function(song, options, success, failure) {
-    var isValid = exports.isValidSong(song);
+exports.queue = function(songs, options, success, failure) {
+    //transform to array if only one song is passed
+    if (!Array.isArray(songs)) songs = [songs];
 
-    if (!isValid) {
-        failure('Incomplete song');
-        return;
+    var invalidIds = [];
+
+    //validate songObjects
+    songs.forEach(function(songObject, index){
+        var isValid = exports.isValidSong(songObject);
+
+        if (!isValid) {
+            invalidIds.push(index);
+        }
+    });
+
+    //break if invalid songs were passed
+    if (invalidIds.length > 0) {
+        failure('Incomplete song(s) at indices: ' + invalidIds.join(', '));
+    } else {
+        //dispatch cordova action
+        exec(success, failure, 'AudioPlayer', 'queue', [songs, options]);
     }
-
-    exec(success, failure, 'AudioPlayer', 'queue', [song, options]);
 };
 
 /**
@@ -135,29 +148,29 @@ exports.stop = function (callback) {
 };
 
 /**
- * Stop playing and clear the queue.
+ * Fade the volume of the track from 0 to 1.
  *
  * @param [ Function ] callback Optional callback.
  *
  * @return [ Void ]
  */
 exports.fadeInVolume = function (callback) {
-    exec(success, failure, 'AudioPlayer', 'fadeInVolume', []);
+    exec(callback, null, 'AudioPlayer', 'fadeInVolume', []);
 };
 
 /**
- * Stop playing and clear the queue.
+ * Fade the volume of the track from 1 to 0.
  *
  * @param [ Function ] callback Optional callback.
  *
  * @return [ Void ]
  */
 exports.fadeOutVolume = function (callback) {
-    exec(success, failure, 'AudioPlayer', 'fadeOutVolume', []);
+    exec(callback, null, 'AudioPlayer', 'fadeOutVolume', []);
 };
 
 /**
- * Stop playing and clear the queue.
+ * Get the id of the current track.
  *
  * @param [ Function ] callback Function to execute with the ID of the track.
  *
@@ -167,6 +180,10 @@ exports.getCurrentTrack = function (callback) {
     exec(callback, null, 'AudioPlayer', 'currentTrack', []);
 };
 
+
+/********
+ * UTIL *
+ ********/
 /**
  * Validates the given song regarding completeness.
  *
@@ -177,13 +194,91 @@ exports.getCurrentTrack = function (callback) {
 exports.isValidSong = function (song) {
     var attrs = ['id', 'title', 'album', 'artist', 'file', 'cover'];
 
-    if (!song) return false;
+    if (!song)
+        return false;
 
     for (var index = 0, attr = attrs[index]; index < attrs.length; index++) {
         if (!song[attr]) return false;
     }
 
     return true;
+};
+
+
+/**********
+ * EVENTS *
+ **********/
+
+exports._listener = {};
+
+/**
+ * Fire event with given arguments.
+ *
+ * @param [ String ] event The event's name.
+ * @param {args*} The callback's arguments.
+ *
+ * @return [ Void ]
+ */
+exports.fireEvent = function (event) {
+    var args     = Array.apply(null, arguments).slice(1),
+        listener = this._listener[event];
+
+    if (!listener)
+        return;
+
+    for (var i = 0; i < listener.length; i++) {
+        var fn    = listener[i][0],
+            scope = listener[i][1];
+
+        fn.apply(scope, args);
+    }
+};
+
+/**
+ * Register callback for given event.
+ *
+ * @param [ String ] event The event's name.
+ * @param [ Function ] callback The function to be exec as callback.
+ * @param [ Object ] scope The callback function's scope.
+ *
+ * @return [ Void ]
+ */
+exports.on = function (event, callback, scope) {
+
+    if (typeof callback !== "function")
+        return;
+
+    if (!this._listener[event]) {
+        this._listener[event] = [];
+    }
+
+    var item = [callback, scope || window];
+
+    this._listener[event].push(item);
+};
+
+/**
+ * Unregister callback for given event.
+ *
+ * @param [ String ] event The event's name.
+ * @param [ Function ] callback The function to be exec as callback.
+ *
+ * @return [ Void ]
+ */
+exports.un = function (event, callback) {
+    var listener = this._listener[event];
+
+    if (!listener)
+        return;
+
+    for (var i = 0; i < listener.length; i++) {
+        var fn = listener[i][0];
+
+        if (fn == callback) {
+            listener.splice(i, 1);
+            break;
+        }
+    }
 };
 
 });

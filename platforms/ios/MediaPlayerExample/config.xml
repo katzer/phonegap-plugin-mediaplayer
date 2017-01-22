@@ -15,11 +15,11 @@
         <param name="ios-package" value="CDVGestureHandler" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="Notification">
-        <param name="ios-package" value="CDVNotification" />
-    </feature>
     <feature name="AudioPlayer">
         <param name="ios-package" value="APPAudioPlayerPlugin" />
+    </feature>
+    <feature name="Notification">
+        <param name="ios-package" value="CDVNotification" />
     </feature>
     <name>MediaPlayerExample</name>
     <description>
